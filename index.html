@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Marketing Tools</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <script
+      crossorigin="anonymous"
+      integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh"
+      src="https://lib.baomitu.com/jquery/3.4.1/jquery.min.js"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      #main-container {
+        padding: 40px 100px 0 100px;
+      }
+      .inner-wrapper {
+        padding: 0 300px;
+      }
+      .input-wrapper {
+        padding-bottom: 40px;
+      }
+      .gen-btn,
+      .title {
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main-container" class="container-fluid">
+      <div class="inner-wrapper">
+        <h3 class="title">生成 Web 链接和小程序链接</h3>
+        <div class="input-wrapper">
+          <div class="input-group">
+            <span class="input-group-addon">Category ID</span>
+            <input type="text" class="form-control" id="category-input" />
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <div class="input-group">
+            <span class="input-group-addon">Doc Type</span>
+            <input type="text" class="form-control" id="docType-input" />
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <div class="input-group">
+            <span class="input-group-addon">Media ID</span>
+            <input type="text" class="form-control" id="media-input" />
+          </div>
+        </div>
+
+        <h3 class="title">链接</h3>
+        
+        <div class="input-wrapper">
+          <div class="input-group">
+            <span class="input-group-addon">Web 链接</span>
+            <input type="text" class="form-control" id="web-url-input" />
+            <span class="input-group-btn">
+              <button class="btn btn-info" type="button" onclick="copyWebUrl()">
+                复制
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <div class="input-group">
+            <span class="input-group-addon">微信小程序链接</span>
+            <input type="text" class="form-control" id="miniapp-url-input" />
+            <span class="input-group-btn">
+              <button
+                class="btn btn-info"
+                type="button"
+                onclick="copyMiniappUrl()"
+              >
+                复制
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    // 参数 inputs
+    const categoryInput = document.getElementById("category-input");
+    const docTypeInput = document.getElementById("docType-input");
+    const mediaInput = document.getElementById("media-input");
+
+    // 生成输入框
+    const webUrlInput = document.getElementById("web-url-input");
+    const miniappUrlInput = document.getElementById("miniapp-url-input");
+
+    // 生成 web 链接
+    function genWebUrl(url) {
+      return `https://www.canva.cn/design?create&category=${categoryInput.value}&type=${docTypeInput.value}&media=${mediaInput.value}&schema=web-2`;
+    }
+
+    // 点击生成按钮
+    const fillUrl = () => {
+      const webUrl = genWebUrl();
+      webUrlInput.value = webUrl;
+      miniappUrlInput.value = genMiniappUrl(webUrl)
+    };
+
+    categoryInput.addEventListener('change', fillUrl)
+    docTypeInput.addEventListener('change', fillUrl)
+    mediaInput.addEventListener('change', fillUrl)
+
+    // 生成小程序链接
+    function genMiniappUrl(url) {
+      if (!url) return "";
+      const arr = url.split("/design?");
+      if (arr.length !== 2) return "";
+      return `/pages/editor/editor?url=${encodeURIComponent(
+        "/design?" + arr[1]
+      )}`;
+    }
+
+    // 复制 web 链接
+    function copyWebUrl() {
+      webUrlInput.select();
+      document.execCommand("Copy");
+    }
+
+    // 复制小程序链接
+    function copyMiniappUrl() {
+      miniappUrlInput.select();
+      document.execCommand("Copy");
+    }
+  </script>
+</html>
