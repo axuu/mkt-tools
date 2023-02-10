@@ -4,11 +4,18 @@
 
 #### Changelog:
 
+##### [1.1.2] - 2023-02-10
+
+- feat: add generate button
+
 ##### [1.1.1] - 2021-09-16
-* fix: fix undefined element
+
+- fix: fix undefined element
 
 ##### [1.1.0] - 2021-09-10
-* refactor: generate url automatically
+
+- refactor: generate url automatically
 
 ##### [1.0.0] - 2019-10-30
-* first release
+
+- first release
